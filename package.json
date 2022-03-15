@@ -6,11 +6,257 @@
     "display": "form",
     "components": [
       {
+        "label": "Sincronizar regras IO?",
+        "tableView": false,
+        "key": "syncIORules",
+        "type": "checkbox",
+        "input": true,
+        "defaultValue": false
+      },
+      {
+        "label": "Regras",
+        "reorder": false,
+        "addAnotherPosition": "bottom",
+        "layoutFixed": false,
+        "enableRowGroups": false,
+        "initEmpty": false,
+        "tableView": false,
+        "defaultValue": [
+          {
+            "rule": "",
+            "enable": false
+          }
+        ],
+        "key": "rules",
+        "conditional": {
+          "show": true,
+          "when": "syncIORules",
+          "eq": "true"
+        },
+        "type": "datagrid",
+        "input": true,
+        "components": [
+          {
+            "label": "Regra N#",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "decimalLimit": 0,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "validate": {
+              "required": true,
+              "min": 0,
+              "max": 29
+            },
+            "key": "rule",
+            "type": "number",
+            "input": true
+          },
+          {
+            "label": "Habilitar",
+            "tableView": false,
+            "key": "enable",
+            "type": "checkbox",
+            "input": true,
+            "defaultValue": false
+          },
+          {
+            "label": "Mínimo",
+            "tooltip": "Valor mínimo para regra se ativar.",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "validate": {
+              "required": true,
+              "custom": "valid = input < row.high ? true : 'Precisa ser menor que o máximo';"
+            },
+            "key": "low",
+            "type": "number",
+            "input": true
+          },
+          {
+            "label": "Máximo",
+            "tooltip": "Valor máximo para regra se ativar (inclusivo).",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "validate": {
+              "required": true,
+              "custom": "valid = input > row.low ? true : 'Precisa ser maior que o mínimo';"
+            },
+            "key": "high",
+            "type": "number",
+            "input": true
+          },
+          {
+            "label": "Target",
+            "widget": "choicesjs",
+            "tooltip": "Porta física ou virtual para ler dados.",
+            "tableView": true,
+            "data": {
+              "values": [
+                {
+                  "label": "Digital 1",
+                  "value": "in1"
+                },
+                {
+                  "label": "Digital 2",
+                  "value": "in2"
+                },
+                {
+                  "label": "Digital 3",
+                  "value": "in3"
+                },
+                {
+                  "label": "Digital 4",
+                  "value": "in4"
+                },
+                {
+                  "label": "Digital 5",
+                  "value": "in5"
+                },
+                {
+                  "label": "Digital 6",
+                  "value": "in6"
+                },
+                {
+                  "label": "Contador 1",
+                  "value": "int1"
+                },
+                {
+                  "label": "Contador 2",
+                  "value": "int2"
+                },
+                {
+                  "label": "Contador 3",
+                  "value": "int3"
+                },
+                {
+                  "label": "Contador 4",
+                  "value": "int4"
+                },
+                {
+                  "label": "Contador 5",
+                  "value": "int5"
+                },
+                {
+                  "label": "Contador 6",
+                  "value": "int6"
+                },
+                {
+                  "label": "Analógico 0",
+                  "value": "an0"
+                },
+                {
+                  "label": "Analógico 1",
+                  "value": "an1"
+                },
+                {
+                  "label": "Analógico 2",
+                  "value": "an2"
+                },
+                {
+                  "label": "Analógico 3",
+                  "value": "an3"
+                },
+                {
+                  "label": "Proximio Warning",
+                  "value": "proxwarn"
+                },
+                {
+                  "label": "Proximio Crítico",
+                  "value": "proxcrit"
+                },
+                {
+                  "label": "Proximio Checkpoint",
+                  "value": "pchkp"
+                }
+              ]
+            },
+            "validate": {
+              "required": true
+            },
+            "key": "target",
+            "type": "select",
+            "input": true
+          },
+          {
+            "label": "Horímetro",
+            "tooltip": "Salvar valor atual do acumulativo das leituras na memória da placa.",
+            "tableView": false,
+            "defaultValue": false,
+            "key": "save",
+            "type": "checkbox",
+            "input": true
+          },
+          {
+            "label": "Trigger",
+            "tooltip": "Quando a regra ativa-se, executar uma acção.",
+            "tableView": false,
+            "key": "trigger",
+            "type": "checkbox",
+            "input": true,
+            "defaultValue": false
+          },
+          {
+            "label": "Trigger Reverso",
+            "tooltip": "Ao invés de o trigger se executar ao ativar a regra, ativar ao desativar.",
+            "tableView": false,
+            "defaultValue": false,
+            "key": "reverse",
+            "conditional": {
+              "show": true,
+              "when": "rules.trigger",
+              "eq": "true"
+            },
+            "type": "checkbox",
+            "input": true
+          },
+          {
+            "label": "Acção",
+            "widget": "choicesjs",
+            "tooltip": "O qué deveria ativar o trigger.",
+            "tableView": true,
+            "data": {
+              "values": [
+                {
+                  "label": "Relay 1",
+                  "value": "0"
+                },
+                {
+                  "label": "Relay 2",
+                  "value": "1"
+                },
+                {
+                  "label": "Buzzer",
+                  "value": "2"
+                }
+              ]
+            },
+            "key": "action",
+            "conditional": {
+              "show": true,
+              "when": "rules.trigger",
+              "eq": "true"
+            },
+            "type": "select",
+            "input": true
+          }
+        ]
+      },
+      {
         "type": "button",
         "label": "Submit",
         "key": "submit",
         "disableOnInvalid": true,
-        "block": true,
         "input": true,
         "tableView": false
       }
