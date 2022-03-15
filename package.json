@@ -1,19 +1,10 @@
 {
-  "name": "monoflow-script-env",
-  "version": "1.18.0",
-  "description": "Script padrão de todos os scripts. Template para criar um script.",
+  "name": "ioflow",
+  "version": "0.0.0",
+  "description": "Configurar e se conectar com as placas IO Flow",
   "settingsSchema": {
     "display": "form",
     "components": [
-      {
-        "label": "Nome",
-        "description": "Nome para saludar",
-        "tableView": true,
-        "key": "nome",
-        "type": "textfield",
-        "input": true,
-        "defaultValue": "User"
-      },
       {
         "type": "button",
         "label": "Submit",
@@ -74,7 +65,7 @@
     "webpack-cli": "4.9.2"
   },
   "dependencies": {
-    "@fermuch/monoutils": "^0.0.31",
+    "@fermuch/monoutils": "^0.0.34",
     "@fermuch/telematree": "^9.20.0",
     "cross-fetch": "3.1.5",
     "firebase": "9.6.8",

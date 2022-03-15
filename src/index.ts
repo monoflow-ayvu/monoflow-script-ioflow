@@ -1,17 +1,17 @@
 import * as MonoUtils from "@fermuch/monoutils";
 
 // based on settingsSchema @ package.json
-type Config = Record<string, unknown> & {
-  nome: string;
+type Config = {
 }
 
 const conf = new MonoUtils.config.Config<Config>();
 
 messages.on('onInit', function() {
-  platform.log('script started! (I am the script)');
-  platform.log('settings:');
-  platform.log(conf.store);
+  platform.log('BLE script started');
 
-  const name = conf.get('nome', 'default name');
-  platform.log(`Hello, ${name}!`);
+  const foundBle = MonoUtils.collections.getBleDoc()?.data?.target || '';
+  if (foundBle && foundBle != data.BLE_TARGET) {
+    env.setData('BLE_TARGET', foundBle);
+    platform.log('BLE target changed to: ' + foundBle);
+  }
 });
