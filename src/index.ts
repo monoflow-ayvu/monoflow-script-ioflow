@@ -33,14 +33,16 @@ type Config = {
 
 const conf = new MonoUtils.config.Config<Config>();
 
-messages.on('onInit', function() {
-  platform.log('BLE script started');
-
+function updateInternalData() {
   const foundBle = MonoUtils.collections.getBleDoc()?.data?.target || '';
   if (foundBle && foundBle != data.BLE_TARGET) {
     env.setData('BLE_TARGET', foundBle);
     platform.log('BLE target changed to: ' + foundBle);
   }
+}
+
+messages.on('onInit', function() {
+  platform.log('BLE script started');
 
   if (conf.get('syncIORules', false)) {
     const rawRules = conf.get('rules', []);
@@ -65,4 +67,10 @@ messages.on('onInit', function() {
     platform.log('setting Monoflow Rules to: ' + JSON.stringify(rules));
     env.setData('MONOFLOW_RULES', rules);
   }
+
+  updateInternalData();
 });
+
+messages.on('onPeriodic', function() {
+  updateInternalData();
+})
