@@ -1,6 +1,6 @@
 import * as MonoUtils from "@fermuch/monoutils";
 
-type IORuleMonoflow = {
+export type IORuleMonoflow = {
   enable: boolean;
   low: number;
   high: number;
@@ -12,7 +12,7 @@ type IORuleMonoflow = {
   // TODO: reverse_only: boolean
 }
 
-type IORule = {
+export type IORule = {
   rule: number; // needs to be floored
   enable: boolean;
   low: number;
@@ -26,7 +26,7 @@ type IORule = {
 }
 
 // based on settingsSchema @ package.json
-type Config = {
+export type Config = {
   syncIORules: boolean;
   rules: IORule[];
 }
