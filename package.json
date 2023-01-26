@@ -169,11 +169,11 @@
                 },
                 {
                   "label": "Proximio Warning",
-                  "value": "proxwarn"
+                  "value": "pwarn"
                 },
                 {
                   "label": "Proximio Crítico",
-                  "value": "proxcrit"
+                  "value": "pcrit"
                 },
                 {
                   "label": "Proximio Checkpoint",
