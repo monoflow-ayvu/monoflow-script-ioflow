@@ -33,12 +33,48 @@ export type Config = {
 
 const conf = new MonoUtils.config.Config<Config>();
 
+const lastSyncedValue: Record<number, number> = {};
+
+class RuleUpdateEvent extends MonoUtils.wk.event.BaseEvent {
+  kind = 'monoflow-rule-update';
+
+  constructor(private key: number, private value: number) {
+    super();
+  }
+
+  getData() {
+    return {
+      key: this.key,
+      value: this.value,
+    }
+  }
+  
+}
+
 function updateInternalData() {
   const foundBle = MonoUtils.collections.getBleDoc()?.data?.target || '';
   if (foundBle && foundBle != data.BLE_TARGET) {
     env.setData('BLE_TARGET', foundBle);
     platform.log('BLE target changed to: ' + foundBle);
   }
+
+  Object
+    .keys(data)
+    .filter(k => k.startsWith('MONOFLOW_RULE'))
+    .forEach((ruleStr) => {
+      const ruleId = Number(ruleStr.replace('MONOFLOW_RULE', '').replace('_COUNTER', ''));
+      const ruleValue = Number(data[ruleStr] || '0');
+
+      if (Number.isNaN(ruleId) || Number.isNaN(ruleValue)) {
+        return;
+      }
+
+      const lastValue = lastSyncedValue[ruleId] || 0;
+      if (ruleValue !== lastValue) {
+        lastSyncedValue[ruleId] = ruleValue;
+        env.project.saveEvent(new RuleUpdateEvent(ruleId, ruleValue));
+      }
+    });
 }
 
 messages.on('onInit', function() {
