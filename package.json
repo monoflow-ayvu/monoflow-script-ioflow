@@ -1,6 +1,6 @@
 {
   "name": "ioflow",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Configurar e se conectar com as placas IO Flow",
   "settingsSchema": {
     "display": "form",
