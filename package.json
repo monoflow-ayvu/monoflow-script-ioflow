@@ -297,7 +297,7 @@
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.15",
     "@types/uuid": "10.0.0",
-    "babel-loader": "9.2.1",
+    "babel-loader": "10.0.0",
     "brotli-webpack-plugin": "1.1.0",
     "commander": "13.1.0",
     "compression-webpack-plugin": "11.1.0",
